@@ -1,0 +1,146 @@
+//
+//  BookingHistoryViewController.swift
+//  Booking
+//
+//  Created by mobileProg on 12/12/2023.
+//
+
+import UIKit
+
+class BookingHistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+ 
+
+    @IBOutlet weak var historySeg: UISegmentedControl!
+    
+    
+    @IBOutlet weak var historyTable: UITableView!
+
+    @IBAction func segChange(_ sender: Any) {
+        let selectedSegment = historySeg.selectedSegmentIndex
+
+          switch selectedSegment {
+          case 0:
+              filteredData = data.filter { $0.status == "Pending" }
+          case 1:
+              filteredData = data.filter { $0.status == "Completed" }
+          case 2:
+              filteredData = data.filter { $0.status == "Cancelled" }
+          default:
+              break
+          }
+
+        historyTable.reloadData()
+        
+    }
+    
+    var data: [BookingHistory] = [
+       BookingHistory(status: "Pending", hospitalName: "Hospital A", testName: "Test 1", testDate: "12/12/2023"),
+       BookingHistory(status: "Completed", hospitalName: "Hospital B", testName: "Test 2", testDate: "13/12/2023"),
+       BookingHistory(status: "Cancelled", hospitalName: "Hospital C", testName: "Test 3", testDate: "14/12/2023"),
+       // Add more bookings as needed
+    ]
+    var filteredData: [BookingHistory] = []
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        _ = historySeg.selectedSegmentIndex
+
+        
+        historyTable.dataSource = self
+        historyTable.delegate = self
+        
+       
+
+        historySeg.addTarget(self, action: #selector(segChange), for: .valueChanged)
+        
+        segChange((Any).self)
+        
+        if let savedBookings = UserDefaults.standard.object(forKey: "Bookings") as? Data {
+             let decoder = JSONDecoder()
+             if let loadedBookings = try? decoder.decode([BookingHistory].self, from: savedBookings) {
+                 data = loadedBookings
+             }
+         }
+
+        // Do any additional setup after loading the view.
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredData.count
+    }
+   
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+     if editingStyle == .delete {
+        // Check if the booking is pending, completed or cancelled
+        let booking = filteredData[indexPath.row]
+        if booking.status == "Pending" {
+            // Change the status of the booking to "Cancelled"
+            booking.status = "Cancelled"
+
+            // Update your data source
+            if let index = data.firstIndex(where: { $0.status == "Pending" }) {
+                data[index].status = "Cancelled"
+            }
+
+            // Save your data array to UserDefaults
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(data) {
+                UserDefaults.standard.set(encoded, forKey: "Bookings")
+            }
+        } else {
+            // Remove the booking from your data source
+            data.remove(at: indexPath.row)
+            filteredData.remove(at: indexPath.row)
+
+            // Delete the row from the table view
+            tableView.deleteRows(at: [indexPath], with: .fade)
+
+            // Save your data array to UserDefaults
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(data) {
+                UserDefaults.standard.set(encoded, forKey: "Bookings")
+            }
+        }
+
+        // Call segChange(_:) to update the state of the table view
+        segChange((Any).self)
+     }
+    }
+
+
+
+  
+
+
+
+
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BookingCell", for: indexPath) as! BookingHistoryTableViewCell
+
+        let booking = filteredData[indexPath.row]
+        cell.status = booking.status
+        cell.bookingStatusLbl.text = booking.status
+        cell.hospitalName.text = booking.hospitalName
+        cell.testName.text = booking.testName
+        cell.testDate.text = booking.testDate
+
+        return cell
+    }
+ }
+
+
+
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+
