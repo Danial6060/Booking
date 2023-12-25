@@ -34,28 +34,31 @@ class BookingHistoryViewController: UIViewController, UITableViewDataSource, UIT
         
     }
     
-    var data: [BookingHistory] = [
-       BookingHistory(status: "Pending", hospitalName: "Hospital A", testName: "Test 1", testDate: "12/12/2023"),
-       BookingHistory(status: "Completed", hospitalName: "Hospital B", testName: "Test 2", testDate: "13/12/2023"),
-       BookingHistory(status: "Cancelled", hospitalName: "Hospital C", testName: "Test 3", testDate: "14/12/2023"),
+    
+   
+       
        // Add more bookings as needed
-    ]
-    var filteredData: [BookingHistory] = []
+    var data = BookingHistory.sampleData()
+     var filteredData: [BookingHistory] = []
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        _ = historySeg.selectedSegmentIndex
+       super.viewDidLoad()
+        
+        //resetD
+        //UserDefaults.standard.removeObject(forKey: "Bookings")
+
+
+
+
 
         
-        historyTable.dataSource = self
-        historyTable.delegate = self
-        
-       
+       _ = historySeg.selectedSegmentIndex
 
-        historySeg.addTarget(self, action: #selector(segChange), for: .valueChanged)
-        
-        segChange((Any).self)
-        
+       historyTable.dataSource = self
+       historyTable.delegate = self
+
+       historySeg.addTarget(self, action: #selector(segChange), for: .valueChanged)
+
         if let savedBookings = UserDefaults.standard.object(forKey: "Bookings") as? Data {
              let decoder = JSONDecoder()
              if let loadedBookings = try? decoder.decode([BookingHistory].self, from: savedBookings) {
@@ -63,50 +66,59 @@ class BookingHistoryViewController: UIViewController, UITableViewDataSource, UIT
              }
          }
 
-        // Do any additional setup after loading the view.
+       segChange((Any).self)
+      
+
+       // Do any additional setup after loading the view.
     }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredData.count
     }
    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-        // Check if the booking is pending, completed or cancelled
-        let booking = filteredData[indexPath.row]
-        if booking.status == "Pending" {
-            // Change the status of the booking to "Cancelled"
-            booking.status = "Cancelled"
+       if editingStyle == .delete {
+           // Get the booking
+           let booking = filteredData[indexPath.row]
 
-            // Update your data source
-            if let index = data.firstIndex(where: { $0.status == "Pending" }) {
-                data[index].status = "Cancelled"
-            }
+           // Check if the booking is pending
+           if booking.status == "Pending" {
+               // Change the status of the booking to "Cancelled"
+               booking.status = "Cancelled"
 
-            // Save your data array to UserDefaults
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(data) {
-                UserDefaults.standard.set(encoded, forKey: "Bookings")
-            }
-        } else {
-            // Remove the booking from your data source
-            data.remove(at: indexPath.row)
-            filteredData.remove(at: indexPath.row)
+               // Update your data source
+               if let index = data.firstIndex(where: { $0.id == booking.id }) {
+                   data[index].status = "Cancelled"
+               }
 
-            // Delete the row from the table view
-            tableView.deleteRows(at: [indexPath], with: .fade)
+               // Save your data array to UserDefaults
+               let encoder = JSONEncoder()
+               if let encoded = try? encoder.encode(data) {
+                   UserDefaults.standard.set(encoded, forKey: "Bookings")
+               }
+           } else {
+               // Remove the booking from your data source
+               data.removeAll(where: { $0.id == booking.id })
+               filteredData.removeAll(where: { $0.id == booking.id })
 
-            // Save your data array to UserDefaults
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(data) {
-                UserDefaults.standard.set(encoded, forKey: "Bookings")
-            }
-        }
+               // Delete the row from the table view
+               tableView.deleteRows(at: [indexPath], with: .fade)
 
-        // Call segChange(_:) to update the state of the table view
-        segChange((Any).self)
-     }
+               // Save your data array to UserDefaults
+               let encoder = JSONEncoder()
+               if let encoded = try? encoder.encode(data) {
+                   UserDefaults.standard.set(encoded, forKey: "Bookings")
+               }
+           }
+
+           // Call segChange(_:) to update the state of the table view
+           segChange((Any).self)
+       }
     }
+
+
+    
 
 
 
