@@ -8,7 +8,31 @@
 import UIKit
 
 class BookingTableViewController: UITableViewController {
+    
+    
+    @IBOutlet weak var ptNameLbl: UILabel!
+    
+    @IBOutlet weak var hospNameLbl: UILabel!
+    
+    
+    @IBOutlet weak var bookingDate: UIDatePicker!
+    
+    
+    @IBOutlet weak var bookingPriceLbl: UILabel!
+    
+    
+    @IBOutlet weak var bookingDescLbl: UILabel!
+    
 
+    @IBOutlet weak var fastingPeriodLbl: UILabel!
+    
+    
+    @IBOutlet weak var testListLbl: UILabel!
+    
+    
+    @IBOutlet weak var expirationDate: UIDatePicker!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
