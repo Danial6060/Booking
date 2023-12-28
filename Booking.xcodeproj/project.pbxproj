@@ -20,6 +20,8 @@
 		F07813622B281256003F8F9E /* BookingHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07813612B281256003F8F9E /* BookingHistory.swift */; };
 		F07813642B281297003F8F9E /* BookingHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07813632B281297003F8F9E /* BookingHistoryViewController.swift */; };
 		F07813662B2812D2003F8F9E /* BookingHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07813652B2812D2003F8F9E /* BookingHistoryTableViewCell.swift */; };
+		F0BD7EC62B3D91E100992A7A /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BD7EC52B3D91E100992A7A /* Package.swift */; };
+		F0BD7EC82B3D91EE00992A7A /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BD7EC72B3D91EE00992A7A /* Test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		F07813612B281256003F8F9E /* BookingHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingHistory.swift; sourceTree = "<group>"; };
 		F07813632B281297003F8F9E /* BookingHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingHistoryViewController.swift; sourceTree = "<group>"; };
 		F07813652B2812D2003F8F9E /* BookingHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		F0BD7EC52B3D91E100992A7A /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		F0BD7EC72B3D91EE00992A7A /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 				F07813352B280DF8003F8F9E /* ViewController.swift */,
 				F07813372B280DF9003F8F9E /* Main.storyboard */,
 				F07813632B281297003F8F9E /* BookingHistoryViewController.swift */,
+				F0BD7EC52B3D91E100992A7A /* Package.swift */,
+				F0BD7EC72B3D91EE00992A7A /* Test.swift */,
 				F07813652B2812D2003F8F9E /* BookingHistoryTableViewCell.swift */,
 				F078133A2B280E03003F8F9E /* Assets.xcassets */,
 				F078133C2B280E03003F8F9E /* LaunchScreen.storyboard */,
@@ -272,8 +278,10 @@
 			files = (
 				F0679AF32B39885400813B01 /* BookingTableViewController.swift in Sources */,
 				F07813662B2812D2003F8F9E /* BookingHistoryTableViewCell.swift in Sources */,
+				F0BD7EC82B3D91EE00992A7A /* Test.swift in Sources */,
 				F07813362B280DF8003F8F9E /* ViewController.swift in Sources */,
 				F07813322B280DF8003F8F9E /* AppDelegate.swift in Sources */,
+				F0BD7EC62B3D91E100992A7A /* Package.swift in Sources */,
 				F07813642B281297003F8F9E /* BookingHistoryViewController.swift in Sources */,
 				F07813622B281256003F8F9E /* BookingHistory.swift in Sources */,
 				F07813342B280DF8003F8F9E /* SceneDelegate.swift in Sources */,

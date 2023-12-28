@@ -45,7 +45,7 @@ class BookingHistoryViewController: UIViewController, UITableViewDataSource, UIT
        super.viewDidLoad()
         
         //resetD
-        //UserDefaults.standard.removeObject(forKey: "Bookings")
+        UserDefaults.standard.removeObject(forKey: "Bookings")
 
 
 
@@ -115,6 +115,40 @@ class BookingHistoryViewController: UIViewController, UITableViewDataSource, UIT
            // Call segChange(_:) to update the state of the table view
            segChange((Any).self)
        }
+    }
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+      let completeAction = UIContextualAction(style: .normal, title: "Complete") { (action, view, completionHandler) in
+          // Get the booking
+          let booking = self.filteredData[indexPath.row]
+
+          // Check if the booking is pending
+          if booking.status == "Pending" {
+              // Change the status of the booking to "Completed"
+              booking.status = "Completed"
+
+              // Update your data source
+              if let index = self.data.firstIndex(where: { $0.id == booking.id }) {
+                  self.data[index].status = "Completed"
+              }
+
+              // Save your data array to UserDefaults
+              let encoder = JSONEncoder()
+              if let encoded = try? encoder.encode(self.data) {
+                  UserDefaults.standard.set(encoded, forKey: "Bookings")
+              }
+              
+              completionHandler(true)
+
+              // Call segChange(_:) to update the state of the table view
+              self.segChange((Any).self)
+          }
+      }
+      
+      completeAction.backgroundColor = .systemGreen
+      
+      let configuration = UISwipeActionsConfiguration(actions: [completeAction])
+      
+      return configuration
     }
 
 

@@ -10,7 +10,8 @@ import UIKit
 class BookingTableViewController: UITableViewController {
     
     
-    @IBOutlet weak var ptNameLbl: UILabel!
+    @IBOutlet weak var pTNameLbl: UILabel!
+    
     
     @IBOutlet weak var hospNameLbl: UILabel!
     
@@ -18,9 +19,11 @@ class BookingTableViewController: UITableViewController {
     @IBOutlet weak var bookingDate: UIDatePicker!
     
     
+    
     @IBOutlet weak var bookingPriceLbl: UILabel!
     
     
+   
     @IBOutlet weak var bookingDescLbl: UILabel!
     
 
@@ -43,6 +46,7 @@ class BookingTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    
     // MARK: - Table view data source
 
    /* override func numberOfSections(in tableView: UITableView) -> Int {
