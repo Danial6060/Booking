@@ -43,7 +43,7 @@ class BookingTableViewController: UITableViewController {
     
         let alertController = UIAlertController(title: "Confirm Booking", message: "Are you sure you want to confirm this booking?", preferredStyle: .alert)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" // Specify the format you want
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm" // Specify the format you want
         let dateString = dateFormatter.string(from: bookingDate.date)
         
         

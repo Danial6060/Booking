@@ -96,7 +96,7 @@ class BookingHistoryViewController: UIViewController, UITableViewDataSource, UIT
                // Save your data array to UserDefaults
                let encoder = JSONEncoder()
                if let encoded = try? encoder.encode(data) {
-                   UserDefaults.standard.set(encoded, forKey: "Bookings")
+                   UserDefaults.standard.set(encoded, forKey: "Booking")
                }
            } else {
                // Remove the booking from your data source
@@ -109,7 +109,7 @@ class BookingHistoryViewController: UIViewController, UITableViewDataSource, UIT
                // Save your data array to UserDefaults
                let encoder = JSONEncoder()
                if let encoded = try? encoder.encode(data) {
-                   UserDefaults.standard.set(encoded, forKey: "Bookings")
+                   UserDefaults.standard.set(encoded, forKey: "Booking")
                }
            }
 
@@ -135,7 +135,7 @@ class BookingHistoryViewController: UIViewController, UITableViewDataSource, UIT
               // Save your data array to UserDefaults
               let encoder = JSONEncoder()
               if let encoded = try? encoder.encode(self.data) {
-                  UserDefaults.standard.set(encoded, forKey: "Bookings")
+                  UserDefaults.standard.set(encoded, forKey: "Booking")
               }
               
               completionHandler(true)
