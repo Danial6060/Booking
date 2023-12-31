@@ -35,10 +35,65 @@ class BookingTableViewController: UITableViewController {
     
     @IBOutlet weak var expirationDate: UIDatePicker!
     
+    @IBOutlet weak var bookBtn: UIBarButtonItem!
+    
+    
+    @IBAction func bookBtnClicked(_ sender: Any) {
+   
+    
+        let alertController = UIAlertController(title: "Confirm Booking", message: "Are you sure you want to confirm this booking?", preferredStyle: .alert)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Specify the format you want
+        let dateString = dateFormatter.string(from: bookingDate.date)
+        
+        
+         let okAction = UIAlertAction(title: "Yes", style: .default) { _ in
+             let bookingHistory = BookingHistory(status: "Pending", hospitalName: self.hospNameLbl.text!, testName: self.pTNameLbl.text!, testDate: dateString)
+             
+             BookingHistory.sampleData.append(bookingHistory)
+             
+             // Handle the booking here
+             let encoder = JSONEncoder()
+             if let encoded = try? encoder.encode(BookingHistory.sampleData) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: "Booking")
+                }
+             
+          
+             
+             if let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "bH") as? BookingHistoryViewController {
+               self.navigationController?.pushViewController(nextVC, animated: true)
+             }
+             // Navigate to the next page
+             //self.performSegue(withIdentifier: "unwindToBook", sender: sender)
+         }
+
+         let cancelAction = UIAlertAction(title: "No", style: .cancel) { _ in
+             // Handle the cancellation here
+         }
+
+         alertController.addAction(okAction)
+         alertController.addAction(cancelAction)
+
+         present(alertController, animated: true, completion: nil)
+        
+
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        expirationDate.isUserInteractionEnabled = false
+        bookingDescLbl.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        bookingDescLbl.contentMode = .top
+        hospNameLbl.text = "llAmerican bubul7"
+        pTNameLbl.text = ";llBlood Workqyffytftuftu1112"
+ 
+        
 
+
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

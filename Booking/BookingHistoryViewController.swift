@@ -38,14 +38,15 @@ class BookingHistoryViewController: UIViewController, UITableViewDataSource, UIT
    
        
        // Add more bookings as needed
-    var data = BookingHistory.sampleData()
+    var data = BookingHistory.sampleData
      var filteredData: [BookingHistory] = []
 
     override func viewDidLoad() {
        super.viewDidLoad()
         
-        //resetD
-        UserDefaults.standard.removeObject(forKey: "Bookings")
+      
+        //UserDefaults.standard.removeObject(forKey: "Bookings")
+        
 
 
 
@@ -59,19 +60,19 @@ class BookingHistoryViewController: UIViewController, UITableViewDataSource, UIT
 
        historySeg.addTarget(self, action: #selector(segChange), for: .valueChanged)
 
-        if let savedBookings = UserDefaults.standard.object(forKey: "Bookings") as? Data {
+        if let savedBookings = UserDefaults.standard.object(forKey: "Booking") as? Data {
              let decoder = JSONDecoder()
              if let loadedBookings = try? decoder.decode([BookingHistory].self, from: savedBookings) {
-                 data = loadedBookings
+                BookingHistory.sampleData = loadedBookings
              }
-         }
+          }
 
        segChange((Any).self)
       
 
        // Do any additional setup after loading the view.
     }
-
+   
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredData.count
